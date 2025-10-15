@@ -1,3 +1,5 @@
+package com.sjcompany
+
 import com.sjcompany.db.DB
 import com.sjcompany.service.RandomLocationService
 import io.ktor.server.application.*

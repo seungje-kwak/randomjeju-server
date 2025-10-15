@@ -29,6 +29,7 @@ object DB {
             driverClassName = "org.postgresql.Driver"
             maximumPoolSize = 5
             isAutoCommit = true
+            addDataSourceProperty("ssl", "true")
         }
 
         ds = HikariDataSource(cfg)

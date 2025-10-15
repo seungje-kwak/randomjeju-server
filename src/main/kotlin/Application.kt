@@ -9,15 +9,23 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun main() {
-    embeddedServer(Netty, port = 8080) {
-        install(ContentNegotiation) { json() }
-        DB.init()
-
-        routing {
-            get("/random-location") {
-                val dto = RandomLocationService.pickAndSave()
-                call.respond(dto)
-            }
-        }
+    embeddedServer(Netty, port = System.getenv("PORT")?.toInt() ?: 8080) {
+        module() // ✅ 아래 정의한 module() 함수 호출
     }.start(wait = true)
+}
+
+// ✅ Ktor가 application.conf에서 찾는 entry point 함수
+fun Application.module() {
+    install(ContentNegotiation) { json() }
+    DB.init()
+
+    routing {
+        get("/random-location") {
+            val dto = RandomLocationService.pickAndSave()
+            call.respond(dto)
+        }
+        get("/") {
+            call.respondText("✅ Random Jeju API server is running!")
+        }
+    }
 }
